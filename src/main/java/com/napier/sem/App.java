@@ -110,7 +110,6 @@ public class App {
         System.out.println("Population of Country organised largest to smallest");
         for (Country country : countries) {
 
-
             System.out.println(country.name + " - Population: " + country.population);
         }
         List<City> cities = app.getAllCityByPopulation();
