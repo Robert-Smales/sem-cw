@@ -76,13 +76,51 @@ public class App {
         return countries;
     }
 
+    public List<City> getAllCityByPopulation() {
+        List<City> cities = new ArrayList<>();
+        try {
+            Statement stmt = con.createStatement();
+            String strSelect =
+                    "SELECT * FROM city " +
+                            "ORDER BY Population DESC";
+            ResultSet rset1 = stmt.executeQuery(strSelect);
+            while (rset1.next()) {
+                City city = new City(
+
+                        rset1.getInt("Id"),
+                        rset1.getString("Name"),
+                        rset1.getString("CountryCode"),
+                        rset1.getString("District"),
+                        rset1.getInt("Population")
+
+                );
+                cities.add(city);
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+            System.out.println("Failed to get cities by population");
+        }
+        return cities;
+    }
+
     public static void main(String[] args) {
         App app = new App();
         app.connect();
         List<Country> countries = app.getAllCountriesByPopulation();
+        System.out.println("Population of Country organised largest to smallest");
         for (Country country : countries) {
+
+
             System.out.println(country.name + " - Population: " + country.population);
         }
+        List<City> cities = app.getAllCityByPopulation();
+        System.out.println("Population of City organised largest to smallest");
+        for (City city : cities) {
+
+
+            System.out.println(city.name + " - Population: " + city.population);
+        }
+
         app.disconnect();
     }
 }

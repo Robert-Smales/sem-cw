@@ -37,6 +37,8 @@ public class Country {
         this.code2 = code2;
     }
 
-    // Getter and setter methods can be added as needed
+
+        // Getter and setter methods can be added as needed
+
 }
 
