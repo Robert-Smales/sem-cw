@@ -238,6 +238,9 @@ Heard Island and McDonald Islands - Population: 0
 British Indian Ocean Territory - Population: 0
 South Georgia and the South Sandwich Islands - Population: 0
 United States Minor Outlying Islands - Population: 0
+
+
+
 report 2 - Population of City organised largest to smallest
 Mumbai (Bombay) - Population: 10500000
 Seoul - Population: 998161
@@ -4318,3 +4321,77 @@ CittÃ  del Vaticano - Population: 45
 Fakaofo - Population: 30
 West Island - Population: 16
 Adamstown - Population: 4
+
+Report 3 - Population of Country organised largest to smallest in Europe
+Russian Federation - Population: 146934000
+Germany - Population: 8216470
+United Kingdom - Population: 5962340
+France - Population: 5922570
+Italy - Population: 5768000
+Ukraine - Population: 5045600
+Spain - Population: 3944170
+Poland - Population: 3865360
+Romania - Population: 2245550
+Netherlands - Population: 1586400
+Yugoslavia - Population: 1064000
+Greece - Population: 1054570
+Czech Republic - Population: 1027810
+Belgium - Population: 1023900
+Belarus - Population: 1023600
+Hungary - Population: 1004320
+Portugal - Population: 999760
+Sweden - Population: 886140
+Bulgaria - Population: 819090
+Austria - Population: 809180
+Switzerland - Population: 716040
+Slovakia - Population: 539870
+Denmark - Population: 533000
+Finland - Population: 517130
+Norway - Population: 447850
+Croatia - Population: 447300
+Moldova - Population: 438000
+Bosnia and Herzegovina - Population: 397200
+Ireland - Population: 377510
+Lithuania - Population: 369850
+Albania - Population: 340120
+Latvia - Population: 242420
+Macedonia - Population: 202400
+Slovenia - Population: 198780
+Estonia - Population: 143920
+Luxembourg - Population: 43570
+Malta - Population: 38020
+Iceland - Population: 27900
+Andorra - Population: 7800
+Faroe Islands - Population: 4300
+Monaco - Population: 3400
+Liechtenstein - Population: 3230
+San Marino - Population: 2700
+Gibraltar - Population: 2500
+Svalbard and Jan Mayen - Population: 320
+Holy See (Vatican City State) - Population: 100
+
+Report 4 - Population of Country organised largest to smallest in Caribbean
+Cuba - Population: 11201000
+Dominican Republic - Population: 849500
+Haiti - Population: 822200
+Puerto Rico - Population: 386900
+Jamaica - Population: 258300
+Trinidad and Tobago - Population: 129500
+Guadeloupe - Population: 45600
+Martinique - Population: 39500
+Bahamas - Population: 30700
+Barbados - Population: 27000
+Netherlands Antilles - Population: 21700
+Saint Lucia - Population: 15400
+Saint Vincent and the Grenadines - Population: 11400
+Aruba - Population: 10300
+Grenada - Population: 9400
+Virgin Islands, U.S. - Population: 9300
+Dominica - Population: 7100
+Antigua and Barbuda - Population: 6800
+Saint Kitts and Nevis - Population: 3800
+Cayman Islands - Population: 3800
+Virgin Islands, British - Population: 2100
+Turks and Caicos Islands - Population: 1700
+Montserrat - Population: 1100
+Anguilla - Population: 800

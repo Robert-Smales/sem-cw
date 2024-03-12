@@ -75,7 +75,77 @@ public class App {
         }
         return countries;
     }
+    //method for getting all countries in Europe
+    public List<Country> getAllCountriesByPopulationInEurope() {
+        List<Country> countries = new ArrayList<>();
+        try {
+            Statement stmt = con.createStatement();
+            String strSelect =
+                    "SELECT * FROM country WHERE Continent = 'Europe' " +
+                            "ORDER BY Population DESC";
+            ResultSet rset = stmt.executeQuery(strSelect);
+            while (rset.next()) {
+                Country country = new Country(
+                        rset.getString("Code"),
+                        rset.getString("Name"),
+                        rset.getString("Continent"),
+                        rset.getString("Region"),
+                        rset.getDouble("SurfaceArea"),
+                        rset.getInt("IndepYear"),
+                        rset.getInt("Population"),
+                        rset.getDouble("LifeExpectancy"),
+                        rset.getDouble("GNP"),
+                        rset.getDouble("GNPOld"),
+                        rset.getString("LocalName"),
+                        rset.getString("GovernmentForm"),
+                        rset.getString("HeadOfState"),
+                        rset.getInt("Capital"),
+                        rset.getString("Code2")
+                );
+                countries.add(country);
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+            System.out.println("Failed to get countries by population");
+        }
+        return countries;
+    }
 
+    //method for getting all countries in Europe
+    public List<Country> getAllCountriesByPopulationInCaribbean() {
+        List<Country> countries = new ArrayList<>();
+        try {
+            Statement stmt = con.createStatement();
+            String strSelect =
+                    "SELECT * FROM country WHERE Region = 'caribbean' " +
+                            "ORDER BY Population DESC";
+            ResultSet rset = stmt.executeQuery(strSelect);
+            while (rset.next()) {
+                Country country = new Country(
+                        rset.getString("Code"),
+                        rset.getString("Name"),
+                        rset.getString("Continent"),
+                        rset.getString("Region"),
+                        rset.getDouble("SurfaceArea"),
+                        rset.getInt("IndepYear"),
+                        rset.getInt("Population"),
+                        rset.getDouble("LifeExpectancy"),
+                        rset.getDouble("GNP"),
+                        rset.getDouble("GNPOld"),
+                        rset.getString("LocalName"),
+                        rset.getString("GovernmentForm"),
+                        rset.getString("HeadOfState"),
+                        rset.getInt("Capital"),
+                        rset.getString("Code2")
+                );
+                countries.add(country);
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+            System.out.println("Failed to get countries by population");
+        }
+        return countries;
+    }
     public List<City> getAllCityByPopulation() {
         List<City> cities = new ArrayList<>();
         try {
@@ -106,12 +176,11 @@ public class App {
     public static void main(String[] args) {
         App app = new App();
         app.connect();
-      // List<Country> countries = app.getAllCountriesByPopulation();
-      // System.out.println("Population of Country organised largest to smallest");
-       // for (Country country : countries) {
-
-         //   System.out.println(country.name + " - Population: " + country.population);
-      // }
+      List<Country> countries = app.getAllCountriesByPopulationInCaribbean();
+      System.out.println("Population of Country organised largest to smallest in Caribbean");
+       for (Country country : countries) {
+               System.out.println(country.name + " - Population: " + country.population);
+       }
        // List<City> cities = app.getAllCityByPopulation();
        // System.out.println("Population of City organised largest to smallest");
         //for (City city : cities) {
