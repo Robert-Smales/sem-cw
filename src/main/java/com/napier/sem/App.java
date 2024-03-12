@@ -76,6 +76,7 @@ public class App {
         return countries;
     }
 
+    // The Organization requires a report on, All the cities in the world organised by largest population to smallest.
     public List<City> getAllCityByPopulation() {
         List<City> cities = new ArrayList<>();
         try {
@@ -98,9 +99,38 @@ public class App {
             }
         } catch (SQLException e) {
             System.out.println(e.getMessage());
-            System.out.println("Failed to get cities by population");
+            System.out.println("Failed to get cities in world by population");
         }
         return cities;
+    }
+
+    // The Organization requires a report on, All the cities in a continent organised by largest population to smallest.
+    public List<CityWithContinent> getAllCityByPopulationAndContinent() {
+        List<CityWithContinent> citiesWithContinent = new ArrayList<>();
+        try {
+            Statement stmt = con.createStatement();
+            String strSelect =
+                            "SELECT c.Name AS CityName, co.Continent,c.Population " +
+                            "FROM city c " +
+                            "JOIN country co ON c.CountryCode = co.Code " +
+                            "ORDER BY co.Continent, c.Population DESC";
+
+            ResultSet rset2 = stmt.executeQuery(strSelect);
+            while (rset2.next()) {
+                CityWithContinent city = new CityWithContinent(
+
+                        rset2.getString("CityName"),
+                        rset2.getInt("Population"),
+                        rset2.getString("Continent")
+
+                );
+                citiesWithContinent.add(city);
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+            System.out.println("Failed to get cities of continent by population");
+        }
+        return citiesWithContinent;
     }
 
     public static void main(String[] args) {
@@ -119,7 +149,11 @@ public class App {
 
             System.out.println(city.name + " - Population: " + city.population);
         }
-
+        List<CityWithContinent> citiesWithContinent =app.getAllCityByPopulationAndContinent();
+        System.out.println("Population of City in Continent organised largest to smallest");
+        for (CityWithContinent city : citiesWithContinent){
+            System.out.println(city.getContinent()+ " " + city.getCityName() + " - Population: " + city.getPopulation());
+           }
         app.disconnect();
     }
 }
