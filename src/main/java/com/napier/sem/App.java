@@ -146,6 +146,7 @@ public class App {
         }
         return countries;
     }
+    // All the cities in a world organised by largest population to smallest.
     public List<City> getAllCityByPopulation() {
         List<City> cities = new ArrayList<>();
         try {
@@ -172,6 +173,39 @@ public class App {
         }
         return cities;
     }
+
+    // All the cities in a continent organised by largest population to smallest.
+    public List<CityWithContinent> getAllCityByPopulationAndContinent() {
+        List<CityWithContinent> citiesWithContinent = new ArrayList<>();
+        try {
+            Statement stmt = con.createStatement();
+            String strSelect =
+                    "SELECT c.Name AS CityName, co.Continent,c.Population " +
+                            "FROM city c " +
+                            "JOIN country co ON c.CountryCode = co.Code " +
+                            "ORDER BY co.Continent, c.Population DESC";
+
+            ResultSet rset2 = stmt.executeQuery(strSelect);
+            while (rset2.next()) {
+                CityWithContinent city = new CityWithContinent(
+
+                        rset2.getString("CityName"),
+                        rset2.getInt("Population"),
+                        rset2.getString("Continent")
+
+                );
+                citiesWithContinent.add(city);
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+            System.out.println("Failed to get cities of continent by population");
+        }
+        return citiesWithContinent;
+    }
+
+
+
+
 
     public List<City> getAllCityByPopulationInMicronesia() {
         List<City> cities = new ArrayList<>();
