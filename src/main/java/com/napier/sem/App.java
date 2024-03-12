@@ -106,19 +106,19 @@ public class App {
     public static void main(String[] args) {
         App app = new App();
         app.connect();
-        List<Country> countries = app.getAllCountriesByPopulation();
-        System.out.println("Population of Country organised largest to smallest");
-        for (Country country : countries) {
+      // List<Country> countries = app.getAllCountriesByPopulation();
+      // System.out.println("Population of Country organised largest to smallest");
+       // for (Country country : countries) {
 
-            System.out.println(country.name + " - Population: " + country.population);
-        }
-        List<City> cities = app.getAllCityByPopulation();
-        System.out.println("Population of City organised largest to smallest");
-        for (City city : cities) {
+         //   System.out.println(country.name + " - Population: " + country.population);
+      // }
+       // List<City> cities = app.getAllCityByPopulation();
+       // System.out.println("Population of City organised largest to smallest");
+        //for (City city : cities) {
 
 
-            System.out.println(city.name + " - Population: " + city.population);
-        }
+         //   System.out.println(city.name + " - Population: " + city.population);
+       // }
 
         app.disconnect();
     }
