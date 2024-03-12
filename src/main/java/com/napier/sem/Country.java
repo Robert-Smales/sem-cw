@@ -1,5 +1,11 @@
 package com.napier.sem;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
+
 public class Country {
     public String code;
     public String name;
@@ -16,7 +22,6 @@ public class Country {
     public String headOfState;
     public int capital;
     public String code2;
-    // Add more fields as needed
 
     // Constructor
     public Country(String code, String name, String continent, String region, double surfaceArea, int indepYear, int population, double lifeExpectancy, double gnp, double gnpOld, String localName, String governmentForm, String headOfState, int capital, String code2) {
@@ -38,7 +43,6 @@ public class Country {
     }
 
 
-        // Getter and setter methods can be added as needed
-
 }
+
 
