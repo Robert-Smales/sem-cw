@@ -250,6 +250,12 @@ public class App {
             System.out.println(city.name + " - Population: " + city.population);
         }
 
+        List<CityWithContinent> citiesWithContinent =app.getAllCityByPopulationAndContinent();
+        System.out.println("Population of City in Continent organised largest to smallest");
+        for (CityWithContinent city : citiesWithContinent){
+            System.out.println(city.getContinent()+ " " + city.getCityName() + " - Population: " + city.getPopulation());
+        }
+
         app.disconnect();
     }
 }
