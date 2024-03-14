@@ -2,8 +2,8 @@ package com.napier.sem;
 
 
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.List;
+        import java.util.ArrayList;
+        import java.util.List;
 
 public class App {
     private Connection con = null;
@@ -250,6 +250,13 @@ public class App {
         } else {
             System.out.println("No cities found in Micronesia or an error occurred while fetching data.");
         }
+
+        List<CityWithContinent> citiesWithContinent =app.getAllCityByPopulationAndContinent();
+        System.out.println("Population of City in Continent organised largest to smallest");
+        for (CityWithContinent city : citiesWithContinent){
+            System.out.println(city.getContinent()+ " " + city.getCityName() + " - Population: " + city.getPopulation());
+        }
+
         app.disconnect();
     }
 }
