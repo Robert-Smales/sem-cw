@@ -2,8 +2,8 @@ package com.napier.sem;
 
 
 import java.sql.*;
-        import java.util.ArrayList;
-        import java.util.List;
+import java.util.ArrayList;
+import java.util.List;
 
 public class App {
     private Connection con = null;
@@ -75,7 +75,9 @@ public class App {
         }
         return countries;
     }
-    //method for getting all countries in Europe
+    /**
+     *  method for getting all countries in Europe
+     */
     public List<Country> getAllCountriesByPopulationInEurope() {
         List<Country> countries = new ArrayList<>();
         try {
@@ -111,7 +113,7 @@ public class App {
         return countries;
     }
 
-    //method for getting all countries in Europe
+    //method for getting all countries by population in a reigon
     public List<Country> getAllCountriesByPopulationInCaribbean() {
         List<Country> countries = new ArrayList<>();
         try {
@@ -206,23 +208,23 @@ public class App {
 
 
 
-
+// all the cities ordered from biggest to smallest by population in a reigon
     public List<City> getAllCityByPopulationInMicronesia() {
         List<City> cities = new ArrayList<>();
         try {
             Statement stmt = con.createStatement();
             String strSelect =
-                    "SELECT * FROM city WHERE Reigon = 'Micronesia'" +
+                    "SELECT * FROM city WHERE District = 'micronesia'" +
                             "ORDER BY Population DESC";
-            ResultSet rset1 = stmt.executeQuery(strSelect);
-            while (rset1.next()) {
+            ResultSet rset3 = stmt.executeQuery(strSelect);
+            while (rset3.next()) {
                 City city = new City(
 
-                        rset1.getInt("Id"),
-                        rset1.getString("Name"),
-                        rset1.getString("CountryCode"),
-                        rset1.getString("District"),
-                        rset1.getInt("Population")
+                        rset3.getInt("Id"),
+                        rset3.getString("Name"),
+                        rset3.getString("CountryCode"),
+                        rset3.getString("District"),
+                        rset3.getInt("Population")
 
                 );
                 cities.add(city);
@@ -237,19 +239,17 @@ public class App {
     public static void main(String[] args) {
         App app = new App();
         app.connect();
-      //List<Country> countries = app.getAllCountriesByPopulationInCaribbean();
-      //System.out.println("Population of Country organised largest to smallest in Caribbean");
-      // for (Country country : countries) {
-      //         System.out.println(country.name + " - Population: " + country.population);
-      // }
+        // Test case: Retrieving cities by population in Micronesia
         List<City> cities = app.getAllCityByPopulationInMicronesia();
-        System.out.println("Population of City organised largest to smallest in Micronesia");
-        for (City city : cities) {
-
-
-            System.out.println(city.name + " - Population: " + city.population);
+        // Validate the result
+        if (cities != null) {
+            System.out.println("Cities in Micronesia ordered by population:");
+            for (City city : cities) {
+                System.out.println(city.name + " - Population: " + city.population);
+            }
+        } else {
+            System.out.println("No cities found in Micronesia or an error occurred while fetching data.");
         }
-
         app.disconnect();
     }
 }
