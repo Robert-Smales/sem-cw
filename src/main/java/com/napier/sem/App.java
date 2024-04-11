@@ -8,8 +8,9 @@ import java.sql.*;
 public class App {
     private Connection con = null;
 
-    public void connect() {
+    public void connect(String location, int delay) {
         try {
+            // Load Database driver
             Class.forName("com.mysql.cj.jdbc.Driver");
         } catch (ClassNotFoundException e) {
             System.out.println("Could not load SQL driver");
@@ -17,16 +18,29 @@ public class App {
         }
 
         int retries = 10;
+        boolean shouldWait = false;
         for (int i = 0; i < retries; ++i) {
             System.out.println("Connecting to database...");
             try {
-                Thread.sleep(30000);
-                con = DriverManager.getConnection("jdbc:mysql://db:3306/world?useSSL=false", "root", "example");
+                if (shouldWait) {
+                    // Wait a bit for db to start
+                    Thread.sleep(delay);
+                }
+
+                // Connect to database
+                con = DriverManager.getConnection("jdbc:mysql://" + location
+                                + "/world?allowPublicKeyRetrieval=true&useSSL=false",
+                        "root", "example");
                 System.out.println("Successfully connected");
                 break;
-            } catch (SQLException | InterruptedException sqle) {
+            } catch (SQLException sqle) {
                 System.out.println("Failed to connect to database attempt " + i);
                 System.out.println(sqle.getMessage());
+
+                // Let's wait before attempting to reconnect
+                shouldWait = true;
+            } catch (InterruptedException ie) {
+                System.out.println("Thread interrupted? Should not happen.");
             }
         }
     }
@@ -252,7 +266,12 @@ public class App {
 
     public static void main(String[] args) {
         App app = new App();
-        app.connect();
+
+        if (args.length < 1) {
+            app.connect("localhost:33060", 10000);
+        } else {
+            app.connect(args[0], Integer.parseInt(args[1]));
+        }
 
         List<CityWithContinent> citiesWithContinent = app.getAllCityByPopulationAndContinent();
         // Call the printCitiesByPopulationAndContinent method
