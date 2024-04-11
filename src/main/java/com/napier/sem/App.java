@@ -205,10 +205,24 @@ public class App {
         return citiesWithContinent;
     }
 
+    public void printCitiesByPopulationAndContinent(List<CityWithContinent> citiesWithContinent) {
+
+
+        System.out.println("Cities by Population and Continent:");
+        System.out.println("===================================");
+
+        for (CityWithContinent city : citiesWithContinent) {
+            System.out.println("City: " + city.getCityName());
+            System.out.println("Population: " + city.getPopulation());
+            System.out.println("Continent: " + city.getContinent());
+            System.out.println("-----------------------------------");
+        }
+    }
 
 
 
-// all the cities ordered from biggest to smallest by population in a reigon
+
+    // all the cities ordered from biggest to smallest by population in a reigon
     public List<City> getAllCityByPopulationInMicronesia() {
         List<City> cities = new ArrayList<>();
         try {
@@ -239,23 +253,11 @@ public class App {
     public static void main(String[] args) {
         App app = new App();
         app.connect();
-        // Test case: Retrieving cities by population in Micronesia
-        List<City> cities = app.getAllCityByPopulationInMicronesia();
-        // Validate the result
-        if (cities != null) {
-            System.out.println("Cities in Micronesia ordered by population:");
-            for (City city : cities) {
-                System.out.println(city.name + " - Population: " + city.population);
-            }
-        } else {
-            System.out.println("No cities found in Micronesia or an error occurred while fetching data.");
-        }
 
-        List<CityWithContinent> citiesWithContinent =app.getAllCityByPopulationAndContinent();
-        System.out.println("Population of City in Continent organised largest to smallest");
-        for (CityWithContinent city : citiesWithContinent){
-            System.out.println(city.getContinent()+ " " + city.getCityName() + " - Population: " + city.getPopulation());
-        }
+        List<CityWithContinent> citiesWithContinent = app.getAllCityByPopulationAndContinent();
+        // Call the printCitiesByPopulationAndContinent method
+        app.printCitiesByPopulationAndContinent(citiesWithContinent);
+
 
         app.disconnect();
     }
