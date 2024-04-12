@@ -41,8 +41,17 @@ public class Country {
         this.capital = capital;
         this.code2 = code2;
     }
+    // Getter method for name
+    public String getName() {
+        return name;
+    }
 
-
+    // Getter method for population
+    public int getPopulation() {
+        return population;
+    }
 }
+
+
 
 
