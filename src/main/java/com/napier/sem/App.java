@@ -4,6 +4,7 @@ package com.napier.sem;
 import java.sql.*;
         import java.util.ArrayList;
         import java.util.List;
+import java.util.Scanner;
 
 public class App {
     private Connection con = null;
@@ -190,6 +191,62 @@ public class App {
         return cities;
     }
 
+    public List<CityWithContinent> getTopNPopulatedCitiesInContinent(String continent) {
+        Scanner input = new Scanner(System.in);
+        System.out.println("How many cities would you like to be displayed?");
+        int n = input.nextInt();
+
+        List<CityWithContinent> topNPopulatedCitiesInContinent = new ArrayList<>();
+        try {
+            // Prepare the SQL query with a parameter placeholder
+            String strSelect =
+                    "SELECT c.Name AS CityName, co.Continent, c.Population " +
+                            "FROM city c " +
+                            "JOIN country co ON c.CountryCode = co.Code " +
+                            "WHERE co.Continent = ? " +
+                            "ORDER BY c.Population DESC " +
+                            "LIMIT ?";
+
+            // Create a PreparedStatement to execute the query
+            PreparedStatement pstmt = con.prepareStatement(strSelect);
+            pstmt.setString(1, continent);  // Set the continent parameter
+            pstmt.setInt(2, n);  // Set the limit to N
+
+            // Execute the query
+            ResultSet rset1 = pstmt.executeQuery();
+
+            // Loop through the result set and add cities to the list
+            while (rset1.next()) {
+                CityWithContinent city = new CityWithContinent(
+                        rset1.getString("CityName"),
+                        rset1.getInt("Population"),
+                        rset1.getString("Continent")
+                );
+                topNPopulatedCitiesInContinent.add(city);
+            }
+
+            // Close the PreparedStatement
+            pstmt.close();
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+            System.out.println("Failed to get cities of continent by population");
+        }
+        return topNPopulatedCitiesInContinent;
+    }
+
+    public void printTopNPopulatedCitiesInContinent(List<CityWithContinent> topNPopulatedCitiesInContinent, String continent) {
+        System.out.println("Top " + topNPopulatedCitiesInContinent.size() + " populated cities in " + continent + ":");
+        System.out.println("===================================");
+
+        for (CityWithContinent city : topNPopulatedCitiesInContinent) {
+            System.out.println("City: " + city.getCityName());
+            System.out.println("Population: " + city.getPopulation());
+            System.out.println("Continent: " + city.getContinent());
+            System.out.println("-----------------------------------");
+        }
+    }
+
+
     // All the cities in a continent organised by largest population to smallest.
     public List<CityWithContinent> getAllCityByPopulationAndContinent() {
         List<CityWithContinent> citiesWithContinent = new ArrayList<>();
@@ -273,10 +330,17 @@ public class App {
             app.connect(args[0], Integer.parseInt(args[1]));
         }
 
+        // Initiate list citiesWithContinent, set value equal to result of getAllCityByPopulationAndContinent() method
         List<CityWithContinent> citiesWithContinent = app.getAllCityByPopulationAndContinent();
-        // Call the printCitiesByPopulationAndContinent method
+
+        // Initiate list, citiesWithContinent1 and set value equal to result of getTopNPopulatedCitiesInContinent() method
+        List<CityWithContinent> citiesWithContinent1 = app.getTopNPopulatedCitiesInContinent("Asia");
+
+        // Call the printCitiesByPopulationAndContinent method and display list, citiesWithContinent
         app.printCitiesByPopulationAndContinent(citiesWithContinent);
 
+        // Call the printTopNCitiesByPopulationAndContinent method and display list, citiesWithContinent1
+        app.printTopNPopulatedCitiesInContinent(citiesWithContinent1, "Asia");
 
         app.disconnect();
     }
