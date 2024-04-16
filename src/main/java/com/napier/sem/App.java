@@ -334,9 +334,17 @@ public class App {
         // Call the printCitiesByPopulationAndContinent method and display list, citiesWithContinent
         app.printCitiesByPopulationAndContinent(citiesWithContinent);
 
-        Scanner input = new Scanner(System.in);
+        Scanner scanner = new Scanner(System.in);
         System.out.println("How many cities would you like to be displayed in Asia? (top N report)");
-        int n = input.nextInt();
+
+        int n;
+        try {
+            n = scanner.nextInt();
+        } catch (NoSuchElementException e) {
+            System.err.println("Error: Please provide a valid integer input.");
+            // Optionally, you can retry or exit the program
+            return;
+        }
 
         // Initiate list, citiesWithContinent1 and set value equal to result of getTopNPopulatedCitiesInContinent() method
         List<CityWithContinent> citiesWithContinent1 = app.getTopNPopulatedCitiesInContinent("Asia", n);
