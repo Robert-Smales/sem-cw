@@ -170,7 +170,7 @@ public class App {
         try {
             Statement stmt = con.createStatement();
             String strSelect =
-                    "SELECT * FROM city" +
+                    "SELECT * FROM city " +
                             "ORDER BY Population DESC";
             ResultSet rset1 = stmt.executeQuery(strSelect);
             while (rset1.next()) {
