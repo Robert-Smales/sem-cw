@@ -4,6 +4,7 @@ package com.napier.sem;
 import java.sql.*;
         import java.util.ArrayList;
         import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Scanner;
 
 public class App {
@@ -191,14 +192,9 @@ public class App {
         return cities;
     }
 
-    public List<CityWithContinent> getTopNPopulatedCitiesInContinent(String continent) {
-        Scanner input = new Scanner(System.in);
-        System.out.println("How many cities would you like to be displayed?");
-        int n = input.nextInt();
-
+    public List<CityWithContinent> getTopNPopulatedCitiesInContinent(String continent, int n) {
         List<CityWithContinent> topNPopulatedCitiesInContinent = new ArrayList<>();
         try {
-            // Prepare the SQL query with a parameter placeholder
             String strSelect =
                     "SELECT c.Name AS CityName, co.Continent, c.Population " +
                             "FROM city c " +
@@ -207,15 +203,12 @@ public class App {
                             "ORDER BY c.Population DESC " +
                             "LIMIT ?";
 
-            // Create a PreparedStatement to execute the query
             PreparedStatement pstmt = con.prepareStatement(strSelect);
-            pstmt.setString(1, continent);  // Set the continent parameter
-            pstmt.setInt(2, n);  // Set the limit to N
+            pstmt.setString(1, continent);
+            pstmt.setInt(2, n);
 
-            // Execute the query
             ResultSet rset1 = pstmt.executeQuery();
 
-            // Loop through the result set and add cities to the list
             while (rset1.next()) {
                 CityWithContinent city = new CityWithContinent(
                         rset1.getString("CityName"),
@@ -225,11 +218,16 @@ public class App {
                 topNPopulatedCitiesInContinent.add(city);
             }
 
-            // Close the PreparedStatement
             pstmt.close();
         } catch (SQLException e) {
-            System.out.println(e.getMessage());
-            System.out.println("Failed to get cities of continent by population");
+            System.err.println("Error executing SQL query: " + e.getMessage());
+            System.err.println("Failed to get cities of continent by population");
+        } catch (NoSuchElementException e) {
+            System.err.println("Invalid value for 'n': " + e.getMessage());
+            System.err.println("Failed to get cities of continent by population");
+        } catch (Exception e) {
+            System.err.println("An unexpected error occurred: " + e.getMessage());
+            e.printStackTrace();
         }
         return topNPopulatedCitiesInContinent;
     }
@@ -333,11 +331,15 @@ public class App {
         // Initiate list citiesWithContinent, set value equal to result of getAllCityByPopulationAndContinent() method
         List<CityWithContinent> citiesWithContinent = app.getAllCityByPopulationAndContinent();
 
-        // Initiate list, citiesWithContinent1 and set value equal to result of getTopNPopulatedCitiesInContinent() method
-        List<CityWithContinent> citiesWithContinent1 = app.getTopNPopulatedCitiesInContinent("Asia");
-
         // Call the printCitiesByPopulationAndContinent method and display list, citiesWithContinent
         app.printCitiesByPopulationAndContinent(citiesWithContinent);
+
+        Scanner input = new Scanner(System.in);
+        System.out.println("How many cities would you like to be displayed in Asia? (top N report)");
+        int n = input.nextInt();
+
+        // Initiate list, citiesWithContinent1 and set value equal to result of getTopNPopulatedCitiesInContinent() method
+        List<CityWithContinent> citiesWithContinent1 = app.getTopNPopulatedCitiesInContinent("Asia", n);
 
         // Call the printTopNCitiesByPopulationAndContinent method and display list, citiesWithContinent1
         app.printTopNPopulatedCitiesInContinent(citiesWithContinent1, "Asia");
