@@ -21,6 +21,16 @@ public class City {
             this.population = population;
 
         }
+    // Getter method for name
+    public String getName() {
+        return name;
+    }
+
+    // Getter method for population
+    public int getPopulation() {
+        return population;
+    }
+
 
 }
 
